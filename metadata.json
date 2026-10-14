@@ -1,0 +1,7 @@
+{
+  "uuid": "ubuntuWindowSaver@andrenalin282.github.io",
+  "name": "Ubuntu Window Saver",
+  "description": "Remembers window positions and sizes per monitor and puts them back when a monitor that went away (standby, auto power-off, cable) comes back.",
+  "shell-version": ["50"],
+  "url": "https://github.com/andrenalin282/ubuntuWindowSaver"
+}
