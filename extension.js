@@ -13,7 +13,7 @@ import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 const TAG = '[ubuntuWindowSaver]';
 const SAVE_DELAY_MS = 500;   // debounce for geometry changes
-const GRACE_MS = 2500;       // ignore geometry changes right after a monitor change
+const GRACE_MS = 4000;       // ignore geometry changes right after a monitor change
 const RESTORE_DELAY_MS = 1200; // let mutter finish its own moves first
 
 export default class UbuntuWindowSaver extends Extension {
@@ -181,18 +181,20 @@ export default class UbuntuWindowSaver extends Extension {
                 GLib.source_remove(this._restoreTimer);
             this._restoreTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, RESTORE_DELAY_MS, () => {
                 this._restoreTimer = 0;
-                this._restore(appeared);
+                this._restore();
                 return GLib.SOURCE_REMOVE;
             });
         }).catch(e => console.error(TAG, e));
     }
 
-    _restore(appeared) {
+    _restore() {
         this._graceUntil = this._now() + GRACE_MS;
         let n = 0;
         for (const [win] of this._conns) {
             const s = this._saved.get(win.get_id());
-            if (!s || !appeared.includes(s.key) || win.is_fullscreen())
+            // every window whose monitor is present again, not only those of the
+            // monitor that came back: the layout around it changed as well
+            if (!s || !this._keys.includes(s.key) || win.is_fullscreen())
                 continue;
             const mi = this._keys.indexOf(s.key);
             const mon = Main.layoutManager.monitors[mi];

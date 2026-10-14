@@ -32,7 +32,7 @@ Remove: `gnome-extensions disable ubuntuWindowSaver@andrenalin282.github.io` and
 | Should work | GNOME Shell 45-49 (Ubuntu 24.04 / 24.10 / 25.04 / 25.10, Fedora, Arch, ...): add the version to `shell-version` in `metadata.json`. Not tested. |
 | Not supported | GNOME 44 and older (no ES module extensions) |
 
-The test ran in a headless GNOME Shell with two virtual monitors: one monitor was disabled and enabled again with three windows (floating, floating, maximized). Without the extension the floating window stayed small on the wrong monitor, with it all three came back. It has been used on the real hardware only by its author so far.
+The test ran in a headless GNOME Shell with two virtual monitors: one monitor was disabled and enabled again with three windows (floating on the removed monitor, floating on the remaining monitor and shifted by the shell, maximized). Without the extension the floating windows stayed in the wrong place and size, with it all three came back. On real hardware (LG 5120x1440 + rotated ASUS) the author confirmed that windows of the returning monitor are restored; windows on the other monitor are covered by the newest fix and the test above.
 
 ## How it works / limits
 
